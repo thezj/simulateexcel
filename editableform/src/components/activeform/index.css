@@ -8,24 +8,32 @@
   border-bottom: 1px solid gray;
 }
 .activeform .toolbar .toolbutton {
-  width: 80px;
-  padding: 10px 0;
+  padding: 5px;
+  display: flex;
   cursor: pointer;
   margin-right: 10px;
   border: 1px solid gray;
-  display: flex;
-  flex-direction: column;
   align-items: center;
 }
 .activeform .toolbar .toolbutton:hover {
-  background: gray;
+  background: #333;
+  color: white;
+}
+.activeform .toolbar .toolbutton:hover i {
+  font-size: 13px;
+  margin-right: 10px;
   color: white;
 }
 .activeform .toolbar .toolbutton i {
-  font-size: 20px;
+  font-size: 13px;
+  margin-right: 10px;
+  color: gray;
 }
 .activeform .toolbar .toolbutton div {
   font-size: 12px;
+}
+.activeform .toolbar .toolbutton .el-switch {
+  margin-left: 10px;
 }
 .activeform .table {
   margin: 10px;
@@ -63,4 +71,11 @@
   border-left: none;
   border-top: none;
   box-sizing: border-box;
+}
+.activeform .table .cell input {
+  height: 100%;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: none;
 }

@@ -6,13 +6,13 @@ export default {
       //拆分单元格状态
       splitcelllock: false,
       //编辑状态
-      editcelllock:false,
+      editcelllock: false,
       //总列数
       columnsum: 24,
       //单列宽度
       columnwidth: 1 / 24 * 100,
       //单列高度
-      rowheight: 40,
+      rowheight: 20,
       //总行数
       rowsum: 12,
       //单元格数据
@@ -34,19 +34,19 @@ export default {
   watch: {
     // 如果 `question` 发生改变，这个函数就会运行
     mergecelllock(newv, oldc) {
-      if(newv){
+      if (newv) {
         this.splitcelllock = false
         this.editcelllock = false
       }
     },
     splitcelllock(newv, oldc) {
-      if(newv){
+      if (newv) {
         this.mergecelllock = false
         this.editcelllock = false
       }
     },
     editcelllock(newv, oldc) {
-      if(newv){
+      if (newv) {
         this.mergecelllock = false
         this.splitcelllock = false
       }
@@ -107,6 +107,50 @@ export default {
   },
 
   methods: {
+
+    //增加行
+    addline() {
+      let rowindex = _.cloneDeep(this.cells).pop().rowindex + 1
+      Array.from(Array(this.columnsum)).map((column, columnindex) => {
+        this.cells.push({
+          rowindex,
+          columnindex,
+          colspan: 1,
+          rowspan: 1,
+          style: {
+            width: this.columnwidth * 1 + "px",
+            height: this.rowheight * 1 + 'px',
+            top: rowindex * this.rowheight + 'px',
+            left: columnindex * this.columnwidth + 'px',
+            display: 'block',
+            backgroundColor: '#fff'
+          },
+          rectangle: {
+            point: [{
+              x: columnindex * this.columnwidth,
+              y: rowindex * this.rowheight
+            }, {
+              x: columnindex * this.columnwidth + this.columnwidth * 1,
+              y: rowindex * this.rowheight
+            }, {
+              x: columnindex * this.columnwidth,
+              y: rowindex * this.rowheight + this.rowheight * 1
+            }, {
+              x: columnindex * this.columnwidth + this.columnwidth * 1,
+              y: rowindex * this.rowheight + this.rowheight * 1
+            }],
+            x1: columnindex * this.columnwidth,
+            x2: columnindex * this.columnwidth + this.columnwidth * 1,
+            y1: rowindex * this.rowheight,
+            y2: rowindex * this.rowheight + this.rowheight * 1,
+          }
+        })
+      })
+
+      //修正表格边框高度
+      $('#celltable').height(this.rowheight * ++rowindex)
+
+    },
 
     //拆分单元格
     cellclick(cell) {
@@ -314,7 +358,7 @@ export default {
 
         //判断重合
         if (this.isovelay(cell.rectangle, rectangle)) {
-          cell.style.backgroundColor = 'blue'
+          cell.style.backgroundColor = 'rgba(91, 165, 5, .1)'
           overlaycelltemp.push(cell)
         } else {
           cell.style.backgroundColor = '#fff'

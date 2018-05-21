@@ -20,6 +20,10 @@
         <el-switch v-model="editcelllock" active-color="#13ce66" inactive-color="#ff4949">
         </el-switch>
       </div>
+      <div class="toolbutton" @click='addline'>
+        <i class="fa fa-plus-square-o"></i>
+        <div>加一行</div>
+      </div>
     </div>
 
     <!-- 表格 -->
@@ -28,10 +32,7 @@
         @mouseup='mergemaskmouseup($event)'></div>
       <div class="rendermask" v-if='mergecelllock' :style='rendermask'></div>
       <div @click='cellclick(cell)' v-for='cell in cells' class="cell" :style='cell.style'>
-        <!-- {{cell.colspan}}
-        {{cell.rowspan}}
-        {{cell.rectangle.x2}}
-        {{cell.rectangle.y2}} -->
+        <input type="text" v-model='cell.value'>
       </div>
     </div>
 
